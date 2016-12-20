@@ -46,6 +46,7 @@ Then setup your enviroment :
 ```
 set GOPATH=c:\users\kalebo\repos\gocode
 set PATH=C:\mingw\bin;%PATH%
+```
 
 ## Code
 
