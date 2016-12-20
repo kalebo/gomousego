@@ -9,23 +9,27 @@ import (
 )
 
 func main() {
-	modePtr := flag.String("mode", "random", "Mode to use.")
+	modePtr := flag.String("mode", "momentum", "Mode to use.")
 	flag.Parse()
 
 	var strategy IStrategy
 
 	switch *modePtr {
 	case "random":
-		fmt.Printf("Unimplemented mode: %s\n", *modePtr)
+		// TODO
 	case "schizo":
-		fmt.Printf("Unimplemented mode: %s\n", *modePtr)
+		// TODO
 	case "momentum":
 		// Cole's original algo
-		fmt.Println("Running in mode Momentum")
-		strategy = NewMomentumStrategy(10)
+		strategy = NewMomentumStrategy(15)
 	}
 
-	runStrategy(strategy, 10)
+	if strategy != nil {
+		fmt.Printf("Running in mode: %s\n", *modePtr)
+		runStrategy(strategy, 10)
+	} else {
+		fmt.Printf("Unimplemented mode: %s\n", *modePtr)
+	}
 
 }
 
@@ -51,6 +55,11 @@ type MomentumStrategy struct {
 	damping  int
 }
 
+func NewMomentumStrategy(damping int) *MomentumStrategy {
+	x, y := robotgo.GetMousePos()
+	return &MomentumStrategy{Pair{x, y}, Pair{0, 0}, damping}
+}
+
 func (s *MomentumStrategy) Run() {
 	x, y := robotgo.GetMousePos()
 
@@ -66,9 +75,4 @@ func (s *MomentumStrategy) Run() {
 
 	robotgo.MoveMouse(x+s.momentum.x, y+s.momentum.y)
 	s.previous = Pair{x, y}
-}
-
-func NewMomentumStrategy(damping int) *MomentumStrategy {
-	x, y := robotgo.GetMousePos()
-	return &MomentumStrategy{Pair{x, y}, Pair{0, 0}, damping}
 }
