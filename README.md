@@ -5,7 +5,7 @@ This is a rewrite of a little utility that my coworker used to prank our old bos
 
 This version has been redesigned to be easier to extend with other prank strategies and to compile as a dependency free binary. It runs without placing a entry in the taskbar.
 
-## Installation
+## Usage
 Just hide the binary somewhere and have it called on start up with the desired mode.
 
 For example in the crontab have the entry:
@@ -14,6 +14,13 @@ For example in the crontab have the entry:
 0   *   *   *   *   /usr/local/bin/gomousego --mode momentum
 ```
 
+### Modes / Strategies
+You can choose the mode desired by using the `--mode` flag. See below for a discription of each strategy.
+
+* `momentum` -- the original demonmouse mode. Cursor will retain it's momentum and keep moving.
+* `scroll` -- spins the mouse wheel at random times.
+
+
 ## Build
 If you have Go and all the libraries installed just run `go build`.
 
@@ -21,11 +28,15 @@ Make sure to `go get` the dependencies
 
 ### Linux library setup
 #### Nix
+If you have nix you can just run the following for a complete build enviroment: 
+
 ```
 nix-shell -p xorg.libX11 xorg.libXtst xorg.libXext xorg.libXi libpng libxkbcommon go
 ```
 
-#### Ubuntu 
+#### Ubuntu / Debian
+Install the following packages:
+
 ```
 sudo apt-get install libx11-dev
 sudo apt-get install libgtkglextmm-x11-dev
