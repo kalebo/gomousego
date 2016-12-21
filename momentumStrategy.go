@@ -1,6 +1,10 @@
 package main
 
-import "github.com/go-vgo/robotgo"
+import (
+	"time"
+
+	"github.com/go-vgo/robotgo"
+)
 
 type MomentumStrategy struct {
 	previous Pair
@@ -13,7 +17,7 @@ func NewMomentumStrategy(damping int) *MomentumStrategy {
 	return &MomentumStrategy{Pair{x, y}, Pair{0, 0}, damping}
 }
 
-func (s *MomentumStrategy) Run() {
+func (s *MomentumStrategy) Step() {
 	x, y := robotgo.GetMousePos()
 
 	dif := Pair{
@@ -28,4 +32,12 @@ func (s *MomentumStrategy) Run() {
 
 	robotgo.MoveMouse(x+s.momentum.x, y+s.momentum.y)
 	s.previous = Pair{x, y}
+}
+
+func (s *MomentumStrategy) Run() {
+	t := time.NewTicker(time.Millisecond * time.Duration(10))
+	for {
+		s.Step()
+		<-t.C
+	}
 }

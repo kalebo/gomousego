@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"time"
 )
 
 type IStrategy interface {
@@ -28,21 +27,15 @@ func main() {
 	case "momentum":
 		// Cole's original algo
 		strategy = NewMomentumStrategy(15)
+	case "scroll":
+		strategy = NewScrollStrategy()
 	}
 
 	if strategy != nil {
 		fmt.Printf("Running in mode: %s\n", *modePtr)
-		runStrategy(strategy, 10)
+		strategy.Run()
 	} else {
 		fmt.Printf("Unimplemented mode: %s\n", *modePtr)
 	}
 
-}
-
-func runStrategy(s IStrategy, interval int) {
-	t := time.NewTicker(time.Millisecond * time.Duration(interval))
-	for {
-		s.Run()
-		<-t.C
-	}
 }
