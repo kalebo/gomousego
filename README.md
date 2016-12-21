@@ -22,7 +22,9 @@ You can choose the mode desired by using the `--mode` flag. See below for a desc
 
 
 ## Build
-If you have Go and all the libraries installed just run `go build`.
+If you have Go and are building on linux with all the libraries installed just run `go build`.
+
+On Windows to avoid spawning a cmd prompt you should compile with `go build -ldflags "-H windowsgui"` 
 
 Make sure to `go get` the dependencies
 
