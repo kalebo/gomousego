@@ -23,11 +23,12 @@ func (s *ScrollStrategy) Run() {
 }
 
 func (s *ScrollStrategy) Step() {
-	rint := rand.Intn(100)
+	r := rand.Intn(100)
+	amount := rand.Intn(5)
 
-	if rint < 25 {
-		robotgo.ScrollMouse(10, "up")
-	} else if rint < 50 {
-		robotgo.ScrollMouse(10, "down")
+	if r < 15 {
+		robotgo.ScrollMouse(amount, "up")
+	} else if r < 30 {
+		robotgo.ScrollMouse(amount, "down")
 	}
 }
