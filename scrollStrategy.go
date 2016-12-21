@@ -27,5 +27,5 @@ func (s *ScrollStrategy) Step() {
 }
 
 func (s *ScrollStrategy) StepDuration() time.Duration {
-	return time.Duration(time.Milisecond * s.duration)
+	return time.Duration(s.duration) * time.Millisecond
 }
