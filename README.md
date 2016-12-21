@@ -1,5 +1,4 @@
 # GomouseGo
----
 
 ## Motivation
 This is a rewrite of a little utility that my coworker used to prank our old boss. That version was in C# but was lost in the sea of shifting bits. He later rewrote it in node.js however, this required the node runtime and would place a item in the taskbar alerting the 'user' to the prank.
