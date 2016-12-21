@@ -10,11 +10,16 @@ type MomentumStrategy struct {
 	previous Pair
 	momentum Pair
 	damping  int
+	duration int
+}
+
+type Pair struct {
+	x, y int
 }
 
 func NewMomentumStrategy(damping int) *MomentumStrategy {
 	x, y := robotgo.GetMousePos()
-	return &MomentumStrategy{Pair{x, y}, Pair{0, 0}, damping}
+	return &MomentumStrategy{Pair{x, y}, Pair{0, 0}, damping, 10}
 }
 
 func (s *MomentumStrategy) Step() {
@@ -34,10 +39,6 @@ func (s *MomentumStrategy) Step() {
 	s.previous = Pair{x, y}
 }
 
-func (s *MomentumStrategy) Run() {
-	t := time.NewTicker(time.Millisecond * time.Duration(10))
-	for {
-		s.Step()
-		<-t.C
-	}
+func (s *MomentumStrategy) StepDuration() time.Duration {
+	return time.Duration(time.Milisecond * s.duration)
 }

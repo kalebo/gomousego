@@ -8,18 +8,11 @@ import (
 )
 
 type ScrollStrategy struct {
+	duration int
 }
 
 func NewScrollStrategy() *ScrollStrategy {
-	return &ScrollStrategy{}
-}
-
-func (s *ScrollStrategy) Run() {
-	t := time.NewTicker(time.Millisecond * time.Duration(3000))
-	for {
-		s.Step()
-		<-t.C
-	}
+	return &ScrollStrategy{3000}
 }
 
 func (s *ScrollStrategy) Step() {
@@ -31,4 +24,8 @@ func (s *ScrollStrategy) Step() {
 	} else if r < 30 {
 		robotgo.ScrollMouse(amount, "down")
 	}
+}
+
+func (s *ScrollStrategy) StepDuration() time.Duration {
+	return time.Duration(time.Milisecond * s.duration)
 }

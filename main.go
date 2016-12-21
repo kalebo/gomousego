@@ -6,11 +6,8 @@ import (
 )
 
 type IStrategy interface {
-	Run()
-}
-
-type Pair struct {
-	x, y int
+	Step()
+	StepDuration() time.Duration
 }
 
 func main() {
@@ -25,7 +22,7 @@ func main() {
 	case "schizo":
 		// TODO
 	case "momentum":
-		// Cole's original algo
+		// Cole's original daemon mouse
 		strategy = NewMomentumStrategy(15)
 	case "scroll":
 		strategy = NewScrollStrategy()
@@ -33,9 +30,16 @@ func main() {
 
 	if strategy != nil {
 		fmt.Printf("Running in mode: %s\n", *modePtr)
-		strategy.Run()
+		RunStrategy(strategy)
 	} else {
 		fmt.Printf("Unimplemented mode: %s\n", *modePtr)
 	}
+}
 
+func RunStrategy(s IStrategy) {
+	t := time.NewTicker(s.StepDuration())
+	for {
+		s.Step()
+		<-t.C
+	}
 }
